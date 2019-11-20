@@ -19,7 +19,7 @@ function App() {
       }
     };
 
-    const url = "localhost:3001/HELLO";
+    const url = "localhost:3001/images";
 
     return Axios.post(
       url, fd, config
