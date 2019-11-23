@@ -1,10 +1,27 @@
 import React from 'react';
 import Dropzone from 'react-dropzone'
 import Axios from 'axios';
-import './App.css';
+
+const dropzoneStyle = {
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  padding: '20px',
+  borderWidth: 2,
+  borderRadius: 2,
+  borderColor: '#eeeeee',
+  borderStyle: 'dashed',
+  backgroundColor: '#fafafa',
+  color: '#bdbdbd',
+  outline: 'none',
+  transition: 'border .24s ease-in-out'
+};
+
 
 function App() {
   function onImageDrop(acceptedFiles) {
+    console.log("ACCEPTED")
     const imageFile = acceptedFiles[0]; //We only accept one file.
     console.log(imageFile);
 
@@ -19,7 +36,7 @@ function App() {
       }
     };
 
-    const url = "localhost:3001/images";
+    const url = "http://localhost:3001/images";
 
     return Axios.post(
       url, fd, config
@@ -39,12 +56,15 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Dropzone 
-          onDrop={acceptedFile => onImageDrop(acceptedFile)}
+          onDropAccepted={(acceptedFile) => onImageDrop(acceptedFile)}
+          onDropRejected={() => console.log("NOT ACCEPTED")}
           multiple={false}
           accept="image/*"
         >
           {({getRootProps, getInputProps}) => (
-            <section>
+            <section 
+              style={dropzoneStyle}
+            >
               <div {...getRootProps()} >
                   <input {...getInputProps()} />
                   <p>Drop an image or click to upload</p>
